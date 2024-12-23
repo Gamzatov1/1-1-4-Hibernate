@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.Query;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -33,9 +34,6 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createNativeQuery(hql).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
@@ -49,9 +47,6 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createNativeQuery(hql).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
@@ -96,7 +91,7 @@ public class UserDaoHibernateImpl implements UserDao {
             return session.createQuery("from User", User.class).list();
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
     }
 
